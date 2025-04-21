@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WandaVision | Flix</title>
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+    <!-- BOX ICONS -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <!-- OWL CAROUSEL CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <!-- APP CSS -->
+    <link rel="stylesheet" href="../../css/app.css">
+    <link rel="stylesheet" href="../../css/grid.css">
+    <style>
+        /* Additional styles for series detail page */
+        .series-detail-section {
+            padding: 80px 0 60px;
+            background-color: var(--body-bg);
+            color: var(--text-color);
+        }
+        
+        .series-header {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 60px;
+            margin-bottom: 80px;
+            align-items: flex-start;
+        }
+        
+        .series-poster {
+            flex: 0 1 450px;
+            min-width: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+            position: relative;
+            aspect-ratio: 2/3;
+        }
+        
+        .series-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        
+        .series-poster:hover img {
+            transform: scale(1.03);
+        }
+        
+        .series-info {
+            flex: 1;
+            min-width: 300px;
+            padding-top: 20px;
+        }
+        
+        .series-info h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            color: var(--text-color);
+            line-height: 1.2;
+        }
+        
+        .series-info h1 span {
+            font-size: 1.8rem;
+            color: #aaa;
+            font-weight: 400;
+            display: block;
+            margin-top: 5px;
+        }
+        
+        .series-meta {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 25px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .series-meta span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .rating i {
+            color: var(--main-color);
+            font-size: 1.2rem;
+        }
+        
+        .genres {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .genres a {
+            background-color: rgba(255,255,255,0.1);
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+        
+        .genres a:hover {
+            background-color: var(--main-color);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+        
+        .synopsis {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            margin-bottom: 40px;
+            color: #ddd;
+            max-width: 800px;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn-hover {
+            background-color: var(--main-color);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            z-index: 1;
+        }
+        
+        .btn-hover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: #a52828;
+            transition: width 0.3s;
+            z-index: -1;
+        }
+        
+        .btn-hover:hover::before {
+            width: 100%;
+        }
+        
+        .btn-hover:hover span {
+            color: #fff;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--text-color);
+            color: var(--text-color);
+        }
+        
+        .btn-outline:hover {
+            border-color: var(--main-color);
+            color: var(--main-color);
+            transform: translateY(-2px);
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            padding-left: 20px;
+            border-left: 5px solid var(--main-color);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 20px;
+            width: 50px;
+            height: 3px;
+            background-color: var(--main-color);
+        }
+        
+        .cast-carousel {
+            margin-bottom: 80px;
+        }
+        
+        .cast-carousel .cast-member {
+            text-align: center;
+            padding: 15px;
+            transition: transform 0.3s;
+        }
+        
+        .cast-carousel .cast-member:hover {
+            transform: translateY(-10px);
+        }
+        
+        .cast-carousel .cast-member img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 4px solid var(--main-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .cast-carousel .cast-member p:first-of-type {
+            font-weight: 700;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        
+        .cast-carousel .cast-member p:last-of-type {
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+        
+        .seasons-section {
+            margin-bottom: 60px;
+        }
+        
+        .season-selector {
+            margin-bottom: 30px;
+        }
+        
+        .season-selector select {
+            background-color: var(--box-bg);
+            color: var(--text-color);
+            border: 2px solid var(--main-color);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+        
+        .episodes-list {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .episode {
+            display: flex;
+            gap: 20px;
+            background-color: var(--box-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .episode:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        
+        .episode-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--main-color);
+            min-width: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(192, 57, 43, 0.1);
+        }
+        
+        .episode img {
+            width: 200px;
+            height: 120px;
+            object-fit: cover;
+        }
+        
+        .episode-info {
+            padding: 15px;
+            flex: 1;
+        }
+        
+        .episode-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        
+        .episode-info p {
+            color: #aaa;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .episode-info .duration {
+            color: var(--main-color);
+            font-weight: 600;
+        }
+        
+        .watch-episode {
+            background-color: var(--main-color);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .watch-episode:hover {
+            background-color: #a52828;
+            transform: translateY(-2px);
+        }
+        
+        .similar-section {
+            margin-top: 60px;
+        }
+        
+        @media (max-width: 1200px) {
+            .series-poster {
+                flex: 0 1 400px;
+            }
+            
+            .series-info h1 {
+                font-size: 3rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .series-header {
+                gap: 40px;
+            }
+            
+            .series-poster {
+                flex: 0 1 350px;
+            }
+            
+            .series-info h1 {
+                font-size: 2.5rem;
+            }
+            
+            .synopsis {
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .series-header {
+                flex-direction: column;
+                gap: 30px;
+                margin-bottom: 60px;
+            }
+            
+            .series-poster {
+                width: 100%;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            
+            .series-info h1 {
+                font-size: 2.2rem;
+            }
+            
+            .series-meta {
+                gap: 15px;
+            }
+            
+            .actions {
+                flex-direction: row;
+                flex-wrap: wrap;
+                margin-top: 30px;
+            }
+            
+            .cast-carousel .cast-member img {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .episode {
+                flex-direction: column;
+            }
+            
+            .episode img {
+                width: 100%;
+                height: 180px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .series-detail-section {
+                padding: 60px 0 40px;
+            }
+            
+            .series-info h1 {
+                font-size: 2rem;
+            }
+            
+            .series-meta span {
+                font-size: 1rem;
+            }
+            
+            .genres a {
+                padding: 6px 14px;
+                font-size: 0.9rem;
+            }
+            
+            .btn {
+                padding: 10px 25px;
+                font-size: 1rem;
+            }
+            
+            .cast-carousel .cast-member img {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .episode-number {
+                font-size: 1.2rem;
+                min-width: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAV -->
+    <div class="nav-wrapper">
+        <div class="container">
+            <div class="nav">
+                <a href="../../index.html" class="logo">
+                    <i class='bx bx-movie-play bx-tada main-color'></i>Fl<span class="main-color">i</span>x
+                </a>
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search movies, series..." id="search-input">
+                        <button id="search-btn"><i class='bx bx-search'></i></button>
+                    </div>
+                    <div class="search-results" id="search-results"></div>
+                </div>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#">Genre <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../genres/action.html">Action</a></li>
+                            <li><a href="../genres/adventure.html">Adventure</a></li>
+                            <li><a href="../genres/comedy.html">Comedy</a></li>
+                            <li><a href="../genres/drama.html">Drama</a></li>
+                            <li><a href="../genres/sci-fi.html">Sci-Fi</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Movies <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../movies/popular.html">Popular</a></li>
+                            <li><a href="../movies/new-releases.html">New Releases</a></li>
+                            <li><a href="../movies/classics.html">Classics</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Series <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../series/popular.html">Popular</a></li>
+                            <li><a href="../series/new-releases.html">New Releases</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown auth-dropdown">
+                        <a href="#"><i class='bx bx-user'></i> <span class="auth-text">Sign in</span> <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu auth-menu">
+                            <li><a href="#" id="login-btn">Login</a></li>
+                            <li><a href="#" id="register-btn">Register</a></li>
+                            <li><a href="../profile.html" id="profile-btn" style="display:none;">Profile</a></li>
+                            <li><a href="#" id="logout-btn" style="display:none;">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="hamburger-menu" id="hamburger-menu">
+                    <div class="hamburger"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END NAV -->
+
+    <!-- Series Detail Section -->
+    <div class="series-detail-section">
+        <div class="container">
+            <div class="series-header">
+                <div class="series-poster">
+                    <img src="../images/wanda-banner.jpg" alt="WandaVision Series Poster">
+                </div>
+                <div class="series-info">
+                    <h1>WandaVision <span>(2021)</span></h1>
+                    <div class="series-meta">
+                        <span class="rating"><i class='bx bxs-star'></i> 8.0/10</span>
+                        <span class="seasons">1 Season</span>
+                        <span class="age-rating">TV-14</span>
+                        <span class="quality">4K</span>
+                    </div>
+                    <div class="genres">
+                        <a href="../genres/sci-fi.html">Sci-Fi</a>
+                        <a href="../genres/drama.html">Drama</a>
+                        <a href="../genres/fantasy.html">Fantasy</a>
+                    </div>
+                    <p class="synopsis">
+                        Blending the style of classic sitcoms with the MCU, WandaVision follows Wanda Maximoff and Vision—two super-powered beings living idealized suburban lives—who begin to suspect that everything is not as it seems. This innovative series explores love, loss, and the nature of reality.
+                    </p>
+                    <div class="actions">
+                        <a href="#" class="btn btn-hover watch-now">
+                            <i class='bx bx-play'></i> <span>Watch Now</span>
+                        </a>
+                        <button class="btn btn-outline add-to-list">
+                            <i class='bx bx-plus'></i> <span>Add to List</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="seasons-section">
+                <h2 class="section-title">Episodes</h2>
+                <div class="season-selector">
+                    <select id="season-select">
+                        <option value="1">Season 1</option>
+                    </select>
+                </div>
+                <div class="episodes-list">
+                    <div class="episode">
+                        <div class="episode-number">1</div>
+                        <img src="../images/episodes/ep1.webp" alt="Episode 1">
+                        <div class="episode-info">
+                            <h3>Filmed Before a Live Studio Audience</h3>
+                            <p>Wanda and Vision struggle to conceal their powers during dinner with Vision's boss and his wife.</p>
+                            <span class="duration">30 min</span>
+                            <button class="watch-episode">Watch</button>
+                        </div>
+                    </div>
+                    <div class="episode">
+                        <div class="episode-number">2</div>
+                        <img src="../images/episodes/ep2.webp" alt="Episode 2">
+                        <div class="episode-info">
+                            <h3>Don't Touch That Dial</h3>
+                            <p>Wanda and Vision perform a magic act in their community talent show, but things don't go as planned.</p>
+                            <span class="duration">37 min</span>
+                            <button class="watch-episode">Watch</button>
+                        </div>
+                    </div>
+                    <div class="episode">
+                        <div class="episode-number">3</div>
+                        <img src="../images/episodes/ep3.webp" alt="Episode 3">
+                        <div class="episode-info">
+                            <h3>Now in Color</h3>
+                            <p>Wanda's pregnancy progresses at an alarming rate as she and Vision prepare for parenthood.</p>
+                            <span class="duration">33 min</span>
+                            <button class="watch-episode">Watch</button>
+                        </div>
+                    </div>
+                    <div class="episode">
+                        <div class="episode-number">4</div>
+                        <img src="../images/episodes/ep4.webp" alt="Episode 4">
+                        <div class="episode-info">
+                            <h3>We Interrupt This Program</h3>
+                            <p>S.W.O.R.D. investigates the mysterious anomaly surrounding Westview and its residents.</p>
+                            <span class="duration">38 min</span>
+                            <button class="watch-episode">Watch</button>
+                        </div>
+                    </div>
+                    <div class="episode">
+                        <div class="episode-number">5</div>
+                        <img src="../images/episodes/ep5.webp" alt="Episode 5">
+                        <div class="episode-info">
+                            <h3>On a Very Special Episode...</h3>
+                            <p>Wanda navigates her grief while Vision grows suspicious of their neighbors' behavior.</p>
+                            <span class="duration">41 min</span>
+                            <button class="watch-episode">Watch</button>
+                        </div>
+                    </div>
+                    <div class="episode">
+                        <div class="episode-number">6</div>
+                        <img src="../images/episodes/ep6.webp" alt="Episode 6">
+                        <div class="episode-info">
+                            <h3>All-New Halloween Spooktacular!</h3>
+                            <p>Wanda and Vision celebrate Halloween with their twins, but unexpected visitors arrive.</p>
+                            <span class="duration">38 min</span>
+                            <button class="watch-episode">Watch</button>
+                        </div>
+                    </div>
+                    <div class="episode">
+                        <div class="episode-number">7</div>
+                        <img src="../images/episodes/ep7.webp" alt="Episode 7">
+                        <div class="episode-info">
+                            <h3>Breaking the Fourth Wall</h3>
+                            <p>Wanda deals with her grief as Vision confronts her about the true nature of Westview.</p>
+                            <span class="duration">37 min</span>
+                            <button class="watch-episode">Watch</button>
+                        </div>
+                    </div>
+                    <div class="episode">
+                        <div class="episode-number">8</div>
+                        <img src="../images/episodes/ep8.webp" alt="Episode 8">
+                        <div class="episode-info">
+                            <h3>Previously On</h3>
+                            <p>Wanda's past is revealed as she confronts the truth about her powers and her reality.</p>
+                            <span class="duration">47 min</span>
+                            <button class="watch-episode">Watch</button>
+                        </div>
+                    </div>
+                    <div class="episode">
+                        <div class="episode-number">9</div>
+                        <img src="../images/episodes/ep9.webp" alt="Episode 9">
+                        <div class="episode-info">
+                            <h3>The Series Finale</h3>
+                            <p>Wanda and Vision face off against unexpected foes as their perfect reality begins to crumble.</p>
+                            <span class="duration">50 min</span>
+                            <button class="watch-episode">Watch</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Cast</h2>
+            <div class="cast-carousel owl-carousel">
+                <div class="cast-member">
+                    <img src="../../images/cast/elizabeth.webp" alt="Elizabeth Olsen">
+                    <p>Elizabeth Olsen</p>
+                    <p>Wanda Maximoff</p>
+                </div>
+                <div class="cast-member">
+                    <img src="../../images/cast/paul.webp" alt="Paul Bettany">
+                    <p>Paul Bettany</p>
+                    <p>Vision</p>
+                </div>
+                <div class="cast-member">
+                    <img src="../../images/cast/kathryn.webp" alt="Kathryn Hahn">
+                    <p>Kathryn Hahn</p>
+                    <p>Agatha Harkness</p>
+                </div>
+                <div class="cast-member">
+                    <img src="../../images/cast/teyonah.webp" alt="Teyonah Parris">
+                    <p>Teyonah Parris</p>
+                    <p>Monica Rambeau</p>
+                </div>
+                <div class="cast-member">
+                    <img src="../../images/cast/randall.webp" alt="Randall Park">
+                    <p>Randall Park</p>
+                    <p>Jimmy Woo</p>
+                </div>
+                <div class="cast-member">
+                    <img src="../../images/cast/kat.webp" alt="Kat Dennings">
+                    <p>Kat Dennings</p>
+                    <p>Darcy Lewis</p>
+                </div>
+            </div>
+
+            <div class="similar-section">
+                <h2 class="section-title">More Like This</h2>
+                <div class="movies-slide owl-carousel">
+                    <a href="../series/loki.html" class="movie-item">
+                        <img src="../images/series/loki.webp" alt="Loki">
+                        <div class="movie-item-content">
+                            <div class="movie-item-title">Loki</div>
+                            <div class="movie-infos">
+                                <div class="movie-info">
+                                    <i class="bx bxs-star"></i>
+                                    <span>8.2</span>
+                                </div>
+                                <div class="movie-info">
+                                    <i class="bx bxs-time"></i>
+                                    <span>2 Seasons</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="../series/falcon.html" class="movie-item">
+                        <img src="../images/series/falcon.webp" alt="The Falcon and the Winter Soldier">
+                        <div class="movie-item-content">
+                            <div class="movie-item-title">Falcon & Winter Soldier</div>
+                            <div class="movie-infos">
+                                <div class="movie-info">
+                                    <i class="bx bxs-star"></i>
+                                    <span>7.8</span>
+                                </div>
+                                <div class="movie-info">
+                                    <i class="bx bxs-time"></i>
+                                    <span>1 Season</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="../series/hawkeye.html" class="movie-item">
+                        <img src="../images/series/hawkeye.webp" alt="Hawkeye">
+                        <div class="movie-item-content">
+                            <div class="movie-item-title">Hawkeye</div>
+                            <div class="movie-infos">
+                                <div class="movie-info">
+                                    <i class="bx bxs-star"></i>
+                                    <span>7.5</span>
+                                </div>
+                                <div class="movie-info">
+                                    <i class="bx bxs-time"></i>
+                                    <span>1 Season</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="../series/moonknight.html" class="movie-item">
+                        <img src="../images/series/moonknight.webp" alt="Moon Knight">
+                        <div class="movie-item-content">
+                            <div class="movie-item-title">Moon Knight</div>
+                            <div class="movie-infos">
+                                <div class="movie-info">
+                                    <i class="bx bxs-star"></i>
+                                    <span>7.3</span>
+                                </div>
+                                <div class="movie-info">
+                                    <i class="bx bxs-time"></i>
+                                    <span>1 Season</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER SECTION -->
+    <footer class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-4 col-md-6 col-sm-12">
+                    <div class="content">
+                        <a href="../../index.html" class="logo">
+                            <i class='bx bx-movie-play bx-tada main-color'></i>Fl<span class="main-color">i</span>x
+                        </a>
+                        <p>
+                            Your premier destination for streaming the latest movies, TV shows, and exclusive content. Enjoy unlimited entertainment anywhere, anytime.
+                        </p>
+                        <div class="social-list">
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-facebook"></i>
+                            </a>
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-twitter"></i>
+                            </a>
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8 col-md-6 col-sm-12">
+                    <div class="row">
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Flix</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="../about.html">About Us</a></li>
+                                    <li><a href="../careers.html">Careers</a></li>
+                                    <li><a href="../press.html">Press</a></li>
+                                    <li><a href="../contact.html">Contact</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Browse</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="../browse/movies.html">Movies</a></li>
+                                    <li><a href="../browse/movies.html">TV Shows</a></li>
+                                    <li><a href="../genres/action.html">Genres</a></li>
+                                    <li><a href="../browse/movies.html">New Releases</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Help</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="../help/account.html">Account</a></li>
+                                    <li><a href="../help/plans.html">Plans</a></li>
+                                    <li><a href="../help/devices.html">Devices</a></li>
+                                    <li><a href="../help/contact.html">Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Download</b></p>
+                                <ul class="footer-menu">
+                                    <li>
+                                        <a href="#">
+                                            <img src="../../images/google-play.png" alt="Get on Google Play" style="width:120px;">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <img src="../../images/app-store.png" alt="Download on App Store" style="width:120px;">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- COPYRIGHT SECTION -->
+    <div class="copyright">
+        Copyright © 2025 <a href="https://www.youtube.com/channel/UCnNgtK4tGlWcceXVzoyTg8Q" target="_blank">Flix</a>. All Rights Reserved.
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script src="../../js/app.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Initialize cast carousel
+            $('.cast-carousel').owlCarousel({
+                loop: true,
+                margin: 20,
+                nav: true,
+                dots: false,
+                responsive: {
+                    0: { items: 2 },
+                    600: { items: 4 },
+                    1000: { items: 6 }
+                },
+                navText: ["<i class='bx bx-chevron-left'></i>", "<i class='bx bx-chevron-right'></i>"]
+            });
+            
+            // Initialize similar series carousel
+            $('.movies-slide').owlCarousel({
+                loop: true,
+                margin: 15,
+                nav: true,
+                dots: false,
+                responsive: {
+                    0: { items: 2 },
+                    600: { items: 3 },
+                    1000: { items: 4 }
+                },
+                navText: ["<i class='bx bx-chevron-left'></i>", "<i class='bx bx-chevron-right'></i>"]
+            });
+            
+            // Add to list functionality
+            $('.add-to-list').click(function() {
+                const btn = $(this);
+                btn.html('<i class="bx bx-check"></i> <span>Added</span>');
+                setTimeout(() => {
+                    btn.html('<i class="bx bx-plus"></i> <span>Add to List</span>');
+                }, 2000);
+            });
+            
+            // Watch now button
+            $('.watch-now').click(function(e) {
+                e.preventDefault();
+                alert('Starting playback of WandaVision...');
+            });
+            
+            // Watch episode buttons
+            $('.watch-episode').click(function(e) {
+                e.preventDefault();
+                const episodeNum = $(this).closest('.episode').find('.episode-number').text();
+                alert(`Starting playback of WandaVision Episode ${episodeNum}`);
+            });
+            
+            // Season selector
+            $('#season-select').change(function() {
+                alert(`Loading Season ${$(this).val()} episodes...`);
+            });
+        });
+    </script>
+</body>
+</html>

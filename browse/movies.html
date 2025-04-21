@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies - Flix</title>
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+    <!-- OWL CAROUSEL -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" />
+    <!-- BOX ICONS -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <!-- APP CSS -->
+    <link rel="stylesheet" href="../css/grid.css">
+    <link rel="stylesheet" href="../css/app.css">
+    <style>
+        /* Base Styles */
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #0f0f1a;
+            color: #fff;
+        }
+        
+        /*
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        */
+        
+        .section {
+            padding: 60px 0;
+        }
+        
+        .section-header {
+            font-size: 32px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            position: relative;
+            padding-left: 15px;
+            color: #fff;
+        }
+        
+        /*
+        .section-header::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 80%;
+            width: 4px;
+            background-color: #C1382B;
+        }
+        */
+        
+        /* Movie Grid Styles */
+        .movies-grid {
+            margin-top: 30px;
+        }
+        
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px;
+        }
+        
+        .col-3 {
+            width: 25%;
+            padding: 0 10px;
+            margin-bottom: 20px;
+        }
+        
+        .movie-item {
+            display: block;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+        
+        .movie-item:hover {
+            transform: translateY(-10px);
+        }
+        
+        .movie-item img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .movie-item-content {
+            padding: 15px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+        
+        .movie-item-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .movie-infos {
+            display: flex;
+            gap: 10px;
+            font-size: 14px;
+            color: #ddd;
+        }
+        
+        .movie-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .bx {
+            font-size: 16px;
+            margin-right: 3px;
+        }
+        
+        .bxs-star {
+            color: #FFD700;
+        }
+        
+        /* Filter Bar */
+        .filter-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-option {
+            padding: 8px 20px;
+            background-color: #221E1E;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-option.active {
+            background-color: #C1382B;
+            font-weight: bold;
+        }
+        
+        .filter-option:hover {
+            background-color: #333;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .col-3 {
+                width: 33.33%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .col-3 {
+                width: 50%;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .col-3 {
+                width: 100%;
+            }
+        }
+        .logo i {
+            font-size: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- NAV -->
+    <div class="nav-wrapper">
+        <div class="container">
+            <div class="nav">
+                <a href="../index.html" class="logo">
+                    <i class='bx bx-movie-play bx-tada main-color'></i>Fl<span class="main-color">i</span>x
+                </a>
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search movies, series..." id="search-input">
+                        <button id="search-btn"><i class='bx bx-search'></i></button>
+                    </div>
+                    <div class="search-results" id="search-results"></div>
+                </div>
+                <!-- Update the nav-menu section in index.html -->
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#">Genre <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../genres/action.html">Action</a></li>
+                            <li><a href="../genres/action.html">Adventure</a></li>
+                            <li><a href="../genres/action.html">Animation</a></li>
+                            <li><a href="../genres/action.html">Comedy</a></li>
+                            <li><a href="../genres/action.html">Crime</a></li>
+                            <li><a href="../genres/action.html">Documentary</a></li>
+                            <li><a href="../genres/action.html">Drama</a></li>
+                            <li><a href="../genres/action.html">Fantasy</a></li>
+                            <li><a href="../genres/action.html">Horror</a></li>
+                            <li><a href="../genres/action.html">Sci-Fi</a></li>
+                            <li><a href="../genres/action.html">Thriller</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Movies <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Popular</a></li>
+                            <li><a href="#">New Releases</a></li>
+                            <li><a href="#">Classics</a></li>
+                            <li><a href="#">IMDb Top 250</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Series <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Popular</a></li>
+                            <li><a href="#">New Releases</a></li>
+                            <li><a href="#">TV Shows</a></li>
+                            <li><a href="#">Mini Series</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">About <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Company</a></li>
+                            <li><a href="#">Team</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown auth-dropdown">
+                        <a href="#"><i class='bx bx-user'></i> <span class="auth-text">Sign in</span> <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu auth-menu">
+                            <li><a href="#" id="login-btn">Login</a></li>
+                            <li><a href="#" id="register-btn">Register</a></li>
+                            <li><a href="#" id="profile-btn" style="display:none;">Profile</a></li>
+                            <li><a href="#" id="logout-btn" style="display:none;">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- MOBILE MENU TOGGLE -->
+                <div class="hamburger-menu" id="hamburger-menu">
+                    <div class="hamburger"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END NAV -->
+    <!-- Main Content -->
+    <div class="section">
+        <div class="container">
+            <div class="section-header">
+                Browse Movies
+            </div>
+            
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+                <div class="filter-option active">All</div>
+                <div class="filter-option">Action</div>
+                <div class="filter-option">Adventure</div>
+                <div class="filter-option">Comedy</div>
+                <div class="filter-option">Drama</div>
+                <div class="filter-option">Sci-Fi</div>
+                <div class="filter-option">Horror</div>
+                <div class="filter-option">Animation</div>
+            </div>
+            
+            <!-- Movies Grid -->
+            <div class="movies-grid">
+                <div class="row">
+                    <!-- Movie Item 1 -->
+                    <div class="col-3">
+                        <a href="../movies/action/black-panther.html" class="movie-item">
+                            <img src="../images/black-banner.png" alt="Black Panther">
+                            <div class="movie-item-content">
+                                <div class="movie-item-title">Black Panther</div>
+                                <div class="movie-infos">
+                                    <div class="movie-info">
+                                        <i class='bx bxs-star'></i>
+                                        <span>9.5</span>
+                                    </div>
+                                    <div class="movie-info">
+                                        <span>2022</span>
+                                    </div>
+                                    <div class="movie-info">
+                                        <span>2h 30m</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Movie Item 2 -->
+                    <div class="col-3">
+                        <a href="../movies/action/transformer.html" class="movie-item">
+                            <img src="../images/movies/transformer.jpg" alt="Transformer">
+                            <div class="movie-item-content">
+                                <div class="movie-item-title">Transformer</div>
+                                <div class="movie-infos">
+                                    <div class="movie-info">
+                                        <i class='bx bxs-star'></i>
+                                        <span>8.7</span>
+                                    </div>
+                                    <div class="movie-info">
+                                        <span>2021</span>
+                                    </div>
+                                    <div class="movie-info">
+                                        <span>2h 15m</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Movie Item 3 -->
+                    <div class="col-3">
+                        <a href="../movies/action/black-panther.html" class="movie-item">
+                            <img src="../images/movies/captain-marvel.png" alt="Captain Marvel">
+                            <div class="movie-item-content">
+                                <div class="movie-item-title">Captain Marvel</div>
+                                <div class="movie-infos">
+                                    <div class="movie-info">
+                                        <i class='bx bxs-star'></i>
+                                        <span>8.0</span>
+                                    </div>
+                                    <div class="movie-info">
+                                        <span>2019</span>
+                                    </div>
+                                    <div class="movie-info">
+                                        <span>2h 04m</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Movie Item 4 -->
+                    <div class="col-3">
+                        <a href="../movies/action/black-panther.html" class="movie-item">
+                            <img src="../images/movies/blood-shot.jpg" alt="Bloodshot">
+                            <div class="movie-item-content">
+                                <div class="movie-item-title">Bloodshot</div>
+                                <div class="movie-infos">
+                                    <div class="movie-info">
+                                        <i class='bx bxs-star'></i>
+                                        <span>7.2</span>
+                                    </div>
+                                    <div class="movie-info">
+                                        <span>2020</span>
+                                    </div>
+                                    <div class="movie-info">
+                                        <span>1h 49m</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Movie Item 5 -->
+                    <div class="col-3">
+                        <a href="../movies/action/black-panther.html" class="movie-item">
+                            <img src="../images/movies/bat-man.jpg" alt="The Dark Knight">
+                            <div class="movie-item-content">
+                                <div class="movie-item-title">The Dark Knight</div>
+                                <div class="movie-infos">
+                                    <div class="movie-info">
+                                        <i class='bx bxs-star'></i>
+                                        <span>9.0</span>
+                                    </div>
+                                    <div class="movie-info">
+                                        <span>2008</span>
+                                    </div>
+                                    <div class="movie-info">
+                                        <span>2h 32m</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Movie Item 6 -->
+                    <div class="col-3">
+                        <a href="../movies/action/black-panther.html" class="movie-item">
+                            <img src="../images/movies/resident-evil.jpg" alt="Resident Evil">
+                            <div class="movie-item-content">
+                                <div class="movie-item-title">Resident Evil</div>
+                                <div class="movie-infos">
+                                    <div class="movie-info">
+                                        <i class='bx bxs-star'></i>
+                                        <span>6.6</span>
+                                    </div>
+                                    <div class="movie-info">
+                                        <span>2021</span>
+                                    </div>
+                                    <div class="movie-info">
+                                        <span>1h 47m</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Movie Item 7 -->
+                    <div class="col-3">
+                        <a href="../movies/action/black-panther.html" class="movie-item">
+                            <img src="../images/movies/theatre-dead.jpg" alt="Theatre of the Dead">
+                            <div class="movie-item-content">
+                                <div class="movie-item-title">Theatre of the Dead</div>
+                                <div class="movie-infos">
+                                    <div class="movie-info">
+                                        <i class='bx bxs-star'></i>
+                                        <span>7.8</span>
+                                    </div>
+                                    <div class="movie-info">
+                                        <span>2023</span>
+                                    </div>
+                                    <div class="movie-info">
+                                        <span>1h 55m</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Movie Item 8 -->
+                    <div class="col-3">
+                        <a href="../movies/action/black-panther.html" class="movie-item">
+                            <img src="../images/movies/hunter-killer.jpg" alt="Hunter Killer">
+                            <div class="movie-item-content">
+                                <div class="movie-item-title">Hunter Killer</div>
+                                <div class="movie-infos">
+                                    <div class="movie-info">
+                                        <i class='bx bxs-star'></i>
+                                        <span>6.6</span>
+                                    </div>
+                                    <div class="movie-info">
+                                        <span>2018</span>
+                                    </div>
+                                    <div class="movie-info">
+                                        <span>2h 01m</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Movie Item 9 -->
+                    <div class="col-3">
+                        <a href="../movies/action/black-panther.html" class="movie-item">
+                            <img src="../images/movies/call.jpg" alt="Call">
+                            <div class="movie-item-content">
+                                <div class="movie-item-title">Call</div>
+                                <div class="movie-infos">
+                                    <div class="movie-info">
+                                        <i class='bx bxs-star'></i>
+                                        <span>7.1</span>
+                                    </div>
+                                    <div class="movie-info">
+                                        <span>2020</span>
+                                    </div>
+                                    <div class="movie-info">
+                                        <span>1h 52m</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Movie Item 10 -->
+                    <div class="col-3">
+                        <a href="../series/wandavision.html" class="movie-item">
+                            <img src="../images/series/wanda.png" alt="Wanda Vision">
+                            <div class="movie-item-content">
+                                <div class="movie-item-title">Wanda Vision</div>
+                                <div class="movie-infos">
+                                    <div class="movie-info">
+                                        <i class='bx bxs-star'></i>
+                                        <span>8.2</span>
+                                    </div>
+                                    <div class="movie-info">
+                                        <span>2021</span>
+                                    </div>
+                                    <div class="movie-info">
+                                        <span>2h 30m</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Movie Item 11 -->
+                    <div class="col-3">
+                        <a href="../movies/action/black-panther.html" class="movie-item">
+                            <img src="../images/series/supergirl.jpg" alt="Supergirl">
+                            <div class="movie-item-content">
+                                <div class="movie-item-title">Supergirl</div>
+                                <div class="movie-infos">
+                                    <div class="movie-info">
+                                        <i class='bx bxs-star'></i>
+                                        <span>7.4</span>
+                                    </div>
+                                    <div class="movie-info">
+                                        <span>2020</span>
+                                    </div>
+                                    <div class="movie-info">
+                                        <span>2h 05m</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Movie Item 12 -->
+                    <div class="col-3">
+                        <a href="../cartoons/demon-slayer.html" class="movie-item">
+                            <img src="../images/cartoons/demon-slayer.jpg" alt="Demon Slayer">
+                            <div class="movie-item-content">
+                                <div class="movie-item-title">Demon Slayer</div>
+                                <div class="movie-infos">
+                                    <div class="movie-info">
+                                        <i class='bx bxs-star'></i>
+                                        <span>8.7</span>
+                                    </div>
+                                    <div class="movie-info">
+                                        <span>2021</span>
+                                    </div>
+                                    <div class="movie-info">
+                                        <span>1h 57m</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FOOTER SECTION -->
+    <footer class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-4 col-md-6 col-sm-12">
+                    <div class="content">
+                        <a href="#" class="logo">
+                            <i class='bx bx-movie-play bx-tada main-color'></i>Fl<span class="main-color">i</span>x
+                        </a>
+                        <p>
+                            Experience an immersive journey into the world of cinema with our dynamic movie platform. Discover top-rated films, explore captivating stories, and dive into an extensive collection of genres. Enjoy seamless navigation, high-quality visuals, and an engaging user interface designed to enhance your viewing experience.
+                        </p>
+                        <div class="social-list">
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-facebook"></i>
+                            </a>
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-twitter"></i>
+                            </a>
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8 col-md-6 col-sm-12">
+                    <div class="row">
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Flix</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="#">About Us</a></li>
+                                    <li><a href="#">Careers</a></li>
+                                    <li><a href="#">Press</a></li>
+                                    <li><a href="#">Investors</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Browse</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="./browse/movies.html">Movies</a></li>
+                                    <li><a href="#">TV Shows</a></li>
+                                    <li><a href="#">Genres</a></li>
+                                    <li><a href="#">New Releases</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Help</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="#">Account</a></li>
+                                    <li><a href="#">Plans</a></li>
+                                    <li><a href="#">Supported Devices</a></li>
+                                    <li><a href="#">Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Download app</b></p>
+                                <ul class="footer-menu">
+                                    <li>
+                                        <a href="#">
+                                            <img src="../images/google-play.png" alt="">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <img src="../images/app-store.png" alt="">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- END FOOTER SECTION -->
+
+    <!-- COPYRIGHT SECTION -->
+    <div class="copyright">
+        Copyright © 2025 <a href="#">
+            Harshavardan</a>
+    </div>
+    <!-- END COPYRIGHT SECTION -->
+
+    <!-- SCRIPT -->
+    <!-- JQUERY -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- OWL CAROUSEL -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous"></script>
+    <!-- APP SCRIPT -->
+    <script src="./js/app.js"></script>
+</body>
+</html>

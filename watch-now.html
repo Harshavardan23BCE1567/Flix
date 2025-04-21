@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch Black Panther | Flix</title>
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+    <!-- BOX ICONS -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <!-- APP CSS -->
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/grid.css">
+    <style>
+        .watch-now-section {
+            padding: 40px 0;
+            background-color: var(--body-bg);
+            color: var(--text-color);
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+        }
+        
+        .video-player {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background-color: #000;
+        }
+        
+        .video-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: rgba(0,0,0,0.7);
+        }
+        
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .control-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .control-btn:hover {
+            color: var(--main-color);
+        }
+        
+        .progress-container {
+            flex-grow: 1;
+            height: 5px;
+            background-color: rgba(255,255,255,0.2);
+            margin: 0 20px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--main-color);
+            border-radius: 3px;
+            width: 0%;
+        }
+        
+        .time-display {
+            color: white;
+            font-size: 0.9rem;
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .movie-info-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .movie-title {
+            font-size: 2rem;
+            margin: 0;
+        }
+        
+        .back-to-movie {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .back-to-movie:hover {
+            color: var(--main-color);
+        }
+        
+        .quality-selector {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .quality-btn {
+            padding: 5px 15px;
+            background-color: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .quality-btn.active {
+            background-color: var(--main-color);
+            color: white;
+        }
+        
+        .quality-btn:hover:not(.active) {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .video-controls {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .progress-container {
+                order: 1;
+                width: 100%;
+                margin: 10px 0;
+            }
+            
+            .movie-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        .quality-selector {
+            position: relative;
+        }
+
+        .quality-options {
+            position: absolute;
+            bottom: 100%;
+            right: 0;
+            background: rgba(0,0,0,0.9);
+            border-radius: 4px;
+            padding: 5px 0;
+            display: none;
+            min-width: 100px;
+            z-index: 10;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .quality-options button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            background: none;
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            text-align: left;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .quality-options button i {
+            font-size: 1.1rem;
+        }
+
+        .quality-options button:hover {
+            background: var(--main-color);
+        }
+
+        .quality-selector .quality-btn {
+            background: none; /* match others */
+            padding: 10;        /* match others */
+            height: 100%;      /* keep height consistent */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quality-selector {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- NAV -->
+    <div class="nav-wrapper">
+        <div class="container">
+            <div class="nav">
+                <a href="index.html" class="logo">
+                    <i class='bx bx-movie-play bx-tada main-color'></i>Fl<span class="main-color">i</span>x
+                </a>
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search movies, series..." id="search-input">
+                        <button id="search-btn"><i class='bx bx-search'></i></button>
+                    </div>
+                    <div class="search-results" id="search-results"></div>
+                </div>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#">Genre <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="genres/action.html">Action</a></li>
+                            <li><a href="genres/adventure.html">Adventure</a></li>
+                            <li><a href="genres/animation.html">Animation</a></li>
+                            <li><a href="genres/comedy.html">Comedy</a></li>
+                            <li><a href="genres/sci-fi.html">Sci-Fi</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Movies <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="popular.html">Popular</a></li>
+                            <li><a href="./popular.html">New Releases</a></li>
+                            <li><a href="./popular.html">Classics</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Series <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="popular.html">Popular</a></li>
+                            <li><a href="popular.html">New Releases</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown auth-dropdown">
+                        <a href="#"><i class='bx bx-user'></i> <span class="auth-text">Sign in</span> <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu auth-menu">
+                            <li><a href="#" id="login-btn">Login</a></li>
+                            <li><a href="#" id="register-btn">Register</a></li>
+                            <li><a href="profile.html" id="profile-btn" style="display:none;">Profile</a></li>
+                            <li><a href="#" id="logout-btn" style="display:none;">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="hamburger-menu" id="hamburger-menu">
+                    <div class="hamburger"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END NAV -->
+
+    <!-- Watch Now Section -->
+    <div class="watch-now-section">
+        <div class="container">
+            <div class="movie-info-bar">
+                <h1 class="movie-title">Black Panther (2018)</h1>
+                <a href="movies/action/black-panther.html" class="back-to-movie">
+                    <i class='bx bx-arrow-back'></i> Back to Movie
+                </a>
+            </div>
+            
+            <!-- In the watch-now-section div, replace the video-player div with this: -->
+            <div class="video-container">
+                <video class="video-player" id="video-player">
+                    <source src="videos/sample.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                
+                <div class="video-controls">
+                    <div class="control-group">
+                        <button class="control-btn play-pause-btn"><i class='bx bx-play'></i></button>
+                        <div class="time-display"><span class="current-time">0:00</span> / <span class="duration">0:00</span></div>
+                    </div>
+                    
+                    <div class="progress-container">
+                        <div class="progress-bar"></div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <button class="control-btn volume-btn"><i class='bx bx-volume-full'></i></button>
+                        <!-- Quality Selector -->
+                        <div class="quality-selector">
+                            <button class="control-btn quality-btn"><i class='bx bx-movie'></i></button>
+                            <div class="quality-options">
+                                <button data-quality="480"><i class='bx bx-movie'></i> 480p</button>
+                                <button data-quality="720"><i class='bx bx-movie'></i> 720p</button>
+                                <button data-quality="1080"><i class='bx bx-movie'></i> 1080p</button>
+                                <button data-quality="4k"><i class='bx bx-movie'></i> 4K</button>
+                            </div>
+                        </div>
+                        <button class="control-btn fullscreen-btn"><i class='bx bx-fullscreen'></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER SECTION -->
+    <footer class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-4 col-md-6 col-sm-12">
+                    <div class="content">
+                        <a href="index.html" class="logo">
+                            <i class='bx bx-movie-play bx-tada main-color'></i>Fl<span class="main-color">i</span>x
+                        </a>
+                        <p>
+                            Your premier destination for streaming the latest movies, TV shows, and exclusive content. Enjoy unlimited entertainment anywhere, anytime.
+                        </p>
+                        <div class="social-list">
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-facebook"></i>
+                            </a>
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-twitter"></i>
+                            </a>
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8 col-md-6 col-sm-12">
+                    <div class="row">
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Flix</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="about.html">About Us</a></li>
+                                    <li><a href="careers.html">Careers</a></li>
+                                    <li><a href="press.html">Press</a></li>
+                                    <li><a href="contact.html">Contact</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Browse</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="browse/movies.html">Movies</a></li>
+                                    <li><a href="browse/movies.html">TV Shows</a></li>
+                                    <li><a href="genres/action.html">Genres</a></li>
+                                    <li><a href="browse/movies.html">New Releases</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Help</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="help/account.html">Account</a></li>
+                                    <li><a href="help/plans.html">Plans</a></li>
+                                    <li><a href="help/devices.html">Devices</a></li>
+                                    <li><a href="help/contact.html">Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Download</b></p>
+                                <ul class="footer-menu">
+                                    <li>
+                                        <a href="#">
+                                            <img src="images/google-play.png" alt="Get on Google Play" style="width:120px;">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <img src="images/app-store.png" alt="Download on App Store" style="width:120px;">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- COPYRIGHT SECTION -->
+    <div class="copyright">
+        Copyright © 2025 <a href="#">
+            Harshavardan</a>
+    </div>
+    <!-- END COPYRIGHT SECTION -->
+
+    <!-- SCRIPT -->
+    <!-- JQUERY -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- OWL CAROUSEL -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous"></script>
+    <!-- APP SCRIPT -->
+    <script src="./js/app.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Placeholder for video player functionality
+            // This will be replaced with actual video player code when you have the video file
+            
+            // Quality selector
+            $('.quality-btn').click(function() {
+                $('.quality-btn').removeClass('active');
+                $(this).addClass('active');
+                // Here you would change the video source based on quality selected
+            });
+            
+            // Simulate play/pause button
+            $('.play-pause-btn').click(function() {
+                const icon = $(this).find('i');
+                if (icon.hasClass('bx-play')) {
+                    icon.removeClass('bx-play').addClass('bx-pause');
+                    // Here you would start playback
+                } else {
+                    icon.removeClass('bx-pause').addClass('bx-play');
+                    // Here you would pause playback
+                }
+            });
+            
+            // Back to movie button
+            $('.back-to-movie').click(function(e) {
+                e.preventDefault();
+                window.history.back();
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            const video = $('#video-player')[0];
+            const playPauseBtn = $('.play-pause-btn');
+            const volumeBtn = $('.volume-btn');
+            const fullscreenBtn = $('.fullscreen-btn');
+            const progressBar = $('.progress-bar');
+            const currentTimeDisplay = $('.current-time');
+            const durationDisplay = $('.duration');
+            
+            // Play/Pause toggle
+            playPauseBtn.click(function() {
+                if (video.paused) {
+                    video.play();
+                    playPauseBtn.find('i').removeClass('bx-play').addClass('bx-pause');
+                } else {
+                    video.pause();
+                    playPauseBtn.find('i').removeClass('bx-pause').addClass('bx-play');
+                }
+            });
+            
+            // Update progress bar
+            video.addEventListener('timeupdate', function() {
+                const progress = (video.currentTime / video.duration) * 100;
+                progressBar.css('width', progress + '%');
+                
+                // Update time displays
+                currentTimeDisplay.text(formatTime(video.currentTime));
+                if (!isNaN(video.duration)) {
+                    durationDisplay.text(formatTime(video.duration));
+                }
+            });
+            
+            // Click on progress bar to seek
+            $('.progress-container').click(function(e) {
+                const pos = (e.pageX - $(this).offset().left) / $(this).width();
+                video.currentTime = pos * video.duration;
+            });
+            
+            // Volume toggle
+            volumeBtn.click(function() {
+                video.muted = !video.muted;
+                volumeBtn.find('i').toggleClass('bx-volume-full bx-volume-mute');
+            });
+            
+            // Fullscreen toggle
+            fullscreenBtn.click(function() {
+                if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                } else if (video.webkitRequestFullscreen) {
+                    video.webkitRequestFullscreen();
+                }
+            });
+            
+            // Format time as MM:SS
+            function formatTime(seconds) {
+                const minutes = Math.floor(seconds / 60);
+                seconds = Math.floor(seconds % 60);
+                return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+            }
+
+           // Quality selector functionality
+            const qualitySelector = $('.quality-selector');
+            const qualityBtn = $('.quality-btn');
+            const qualityOptions = $('.quality-options');
+
+            // Toggle quality options on button click
+            qualityBtn.click(function(e) {
+                e.stopPropagation();
+                qualityOptions.toggle();
+            });
+
+            // Close when clicking elsewhere
+            $(document).click(function() {
+                qualityOptions.hide();
+            });
+
+            // Handle quality selection
+            $('.quality-options button').click(function(e) {
+                e.stopPropagation();
+                const quality = $(this).data('quality');
+                qualityBtn.find('i').attr('class', getQualityIcon(quality));
+                qualityOptions.hide();
+                console.log('Selected quality:', quality + 'p');
+            });
+
+            function getQualityIcon(quality) {
+                const icons = {
+                    '480': 'bx bx-movie',
+                    '720': 'bx bx-movie',
+                    '1080': 'bx bx-movie',
+                    '4k': 'bx bx-movie'
+                };
+                return icons[quality] || 'bx bx-movie';
+            }
+        });
+    </script>
+</body>
+</html>

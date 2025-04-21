@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Popular - Flix</title>
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet" />
+    <!-- OWL CAROUSEL -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+        integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+        crossorigin="anonymous"
+    />
+    <!-- BOX ICONS -->
+    <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
+    <!-- APP CSS -->
+    <link rel="stylesheet" href="./css/grid.css" />
+    <link rel="stylesheet" href="./css/app.css" />
+    <style>
+        /* Modal styling fixes */
+        .modal-content {
+            padding: 30px;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: #333;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 35px;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .password-toggle:hover {
+            color: #333;
+        }
+
+        /* Button styling */
+        .btn-hover {
+            border: none;
+            background-color: #221e1e;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .btn-hover:hover {
+            background-color: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Form footer styling */
+        .form-footer {
+            margin-top: 20px;
+        }
+
+        .auth-switch {
+            margin-top: 15px;
+            text-align: center;
+            color: #666;
+        }
+
+        .auth-switch a {
+            color: #c1382b;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .auth-switch a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAV -->
+    <div class="nav-wrapper">
+        <div class="container">
+            <div class="nav">
+                <a href="index.html" class="logo">
+                    <i class="bx bx-movie-play bx-tada main-color"></i>Fl<span class="main-color">i</span>x
+                </a>
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search movies, series..." id="search-input" />
+                        <button id="search-btn"><i class="bx bx-search"></i></button>
+                    </div>
+                    <div class="search-results" id="search-results"></div>
+                </div>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#">Genre <i class="bx bx-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="./genres/action.html">Action</a></li>
+                            <li><a href="./genres/action.html">Adventure</a></li>
+                            <li><a href="./genres/action.html">Animation</a></li>
+                            <li><a href="./genres/action.html">Comedy</a></li>
+                            <li><a href="./genres/action.html">Crime</a></li>
+                            <li><a href="./genres/action.html">Documentary</a></li>
+                            <li><a href="./genres/action.html">Drama</a></li>
+                            <li><a href="./genres/action.html">Fantasy</a></li>
+                            <li><a href="./genres/action.html">Horror</a></li>
+                            <li><a href="./genres/action.html">Sci-Fi</a></li>
+                            <li><a href="./genres/action.html">Thriller</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Movies <i class="bx bx-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="popular.html">Popular</a></li>
+                            <li><a href="popular.html">New Releases</a></li>
+                            <li><a href="popular.html">Classics</a></li>
+                            <li><a href="popular.html">IMDb Top 250</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Series <i class="bx bx-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="popular.html">Popular</a></li>
+                            <li><a href="popular.html">New Releases</a></li>
+                            <li><a href="popular.html">TV Shows</a></li>
+                            <li><a href="popular.html">Mini Series</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">About <i class="bx bx-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Company</a></li>
+                            <li><a href="#">Team</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown auth-dropdown">
+                        <a href="#"><i class="bx bx-user"></i> <span class="auth-text">Sign in</span> <i class="bx bx-chevron-down"></i></a>
+                        <ul class="dropdown-menu auth-menu">
+                            <li><a href="#" id="login-btn">Login</a></li>
+                            <li><a href="#" id="register-btn">Register</a></li>
+                            <li><a href="#" id="profile-btn" style="display:none;">Profile</a></li>
+                            <li><a href="#" id="logout-btn" style="display:none;">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- MOBILE MENU TOGGLE -->
+                <div class="hamburger-menu" id="hamburger-menu">
+                    <div class="hamburger"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END NAV -->
+
+    <!-- MAIN CONTENT -->
+    <div class="section">
+        <div class="container">
+            <div class="section-header">Popular</div>
+            <div class="movies-slide carousel-nav-center owl-carousel">
+                <!-- MOVIE ITEM -->
+                <a href="#" class="movie-item">
+                    <img src="./images/movies/transformer.jpg" alt="Transformer" />
+                    <div class="movie-item-content">
+                        <div class="movie-item-title">Transformer</div>
+                        <div class="movie-infos">
+                            <div class="movie-info">
+                                <i class="bx bxs-star"></i>
+                                <span>8.7</span>
+                            </div>
+                            <div class="movie-info">
+                                <span>2021</span>
+                            </div>
+                            <div class="movie-info">
+                                <span>2h 15m</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- END MOVIE ITEM -->
+                <!-- MOVIE ITEM -->
+                <a href="#" class="movie-item">
+                    <img src="./images/movies/bat-man.jpg" alt="The Dark Knight" />
+                    <div class="movie-item-content">
+                        <div class="movie-item-title">The Dark Knight</div>
+                        <div class="movie-infos">
+                            <div class="movie-info">
+                                <i class="bx bxs-star"></i>
+                                <span>9.0</span>
+                            </div>
+                            <div class="movie-info">
+                                <span>2008</span>
+                            </div>
+                            <div class="movie-info">
+                                <span>2h 32m</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- END MOVIE ITEM -->
+                <!-- MOVIE ITEM -->
+                <a href="#" class="movie-item">
+                    <img src="./images/movies/captain-marvel.png" alt="Captain Marvel" />
+                    <div class="movie-item-content">
+                        <div class="movie-item-title">Captain Marvel</div>
+                        <div class="movie-infos">
+                            <div class="movie-info">
+                                <i class="bx bxs-star"></i>
+                                <span>8.0</span>
+                            </div>
+                            <div class="movie-info">
+                                <span>2019</span>
+                            </div>
+                            <div class="movie-info">
+                                <span>2h 04m</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- END MOVIE ITEM -->
+                <!-- MOVIE ITEM -->
+                <a href="#" class="movie-item">
+                    <img src="./images/movies/blood-shot.jpg" alt="Bloodshot" />
+                    <div class="movie-item-content">
+                        <div class="movie-item-title">Bloodshot</div>
+                        <div class="movie-infos">
+                            <div class="movie-info">
+                                <i class="bx bxs-star"></i>
+                                <span>7.2</span>
+                            </div>
+                            <div class="movie-info">
+                                <span>2020</span>
+                            </div>
+                            <div class="movie-info">
+                                <span>1h 49m</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- END MOVIE ITEM -->
+                <!-- MOVIE ITEM -->
+                <a href="#" class="movie-item">
+                    <img src="./images/movies/black-panther.webp" alt="Black Panther" />
+                    <div class="movie-item-content">
+                        <div class="movie-item-title">Black Panther</div>
+                        <div class="movie-infos">
+                            <div class="movie-info">
+                                <i class="bx bxs-star"></i>
+                                <span>9.5</span>
+                            </div>
+                            <div class="movie-info">
+                                <span>2022</span>
+                            </div>
+                            <div class="movie-info">
+                                <span>2h 30m</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- END MOVIE ITEM -->
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER SECTION -->
+    <footer class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-4 col-md-6 col-sm-12">
+                    <div class="content">
+                        <a href="#" class="logo">
+                            <i class="bx bx-movie-play bx-tada main-color"></i>Fl<span class="main-color">i</span>x
+                        </a>
+                        <p>
+                            Experience an immersive journey into the world of cinema with our dynamic movie platform. Discover top-rated films, explore captivating stories, and dive into an extensive collection of genres. Enjoy seamless navigation, high-quality visuals, and an engaging user interface designed to enhance your viewing experience.
+                        </p>
+                        <div class="social-list">
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-facebook"></i>
+                            </a>
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-twitter"></i>
+                            </a>
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8 col-md-6 col-sm-12">
+                    <div class="row">
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Flix</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="#">About Us</a></li>
+                                    <li><a href="#">Careers</a></li>
+                                    <li><a href="#">Press</a></li>
+                                    <li><a href="#">Investors</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Browse</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="./browse/movies.html">Movies</a></li>
+                                    <li><a href="#">TV Shows</a></li>
+                                    <li><a href="#">Genres</a></li>
+                                    <li><a href="#">New Releases</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Help</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="#">Account</a></li>
+                                    <li><a href="#">Plans</a></li>
+                                    <li><a href="#">Supported Devices</a></li>
+                                    <li><a href="#">Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Download app</b></p>
+                                <ul class="footer-menu">
+                                    <li>
+                                        <a href="#">
+                                            <img src="./images/google-play.png" alt="" />
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <img src="./images/app-store.png" alt="" />
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- END FOOTER SECTION -->
+
+    <!-- COPYRIGHT SECTION -->
+    <div class="copyright">
+        Copyright © 2025 <a href="#">Harshavardan</a>
+    </div>
+    <!-- END COPYRIGHT SECTION -->
+
+    <!-- SCRIPT -->
+    <!-- JQUERY -->
+    <script
+        src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous"
+    ></script>
+    <!-- OWL CAROUSEL -->
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+        integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+        crossorigin="anonymous"
+    ></script>
+    <!-- APP SCRIPT -->
+    <script src="./js/app.js"></script>
+</body>
+
+</html>

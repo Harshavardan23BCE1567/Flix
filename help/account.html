@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Account - Flix</title>
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet" />
+    <!-- BOX ICONS -->
+    <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
+    <!-- APP CSS -->
+    <link rel="stylesheet" href="../css/grid.css" />
+    <link rel="stylesheet" href="../css/app.css" />
+</head>
+
+<body>
+    <!-- NAV -->
+    <div class="nav-wrapper">
+        <div class="container">
+            <div class="nav">
+                <a href="../index.html" class="logo">
+                    <i class='bx bx-movie-play bx-tada main-color'></i>Fl<span class="main-color">i</span>x
+                </a>
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search movies, series..." id="search-input" />
+                        <button id="search-btn"><i class='bx bx-search'></i></button>
+                    </div>
+                    <div class="search-results" id="search-results"></div>
+                </div>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#">Genre <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../genres/action.html">Action</a></li>
+                            <li><a href="../genres/action.html">Adventure</a></li>
+                            <li><a href="../genres/action.html">Animation</a></li>
+                            <li><a href="../genres/action.html">Comedy</a></li>
+                            <li><a href="../genres/action.html">Crime</a></li>
+                            <li><a href="../genres/action.html">Documentary</a></li>
+                            <li><a href="../genres/action.html">Drama</a></li>
+                            <li><a href="../genres/action.html">Fantasy</a></li>
+                            <li><a href="../genres/action.html">Horror</a></li>
+                            <li><a href="../genres/action.html">Sci-Fi</a></li>
+                            <li><a href="../genres/action.html">Thriller</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Movies <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../popular.html">Popular</a></li>
+                            <li><a href="../popular.html">New Releases</a></li>
+                            <li><a href="../popular.html">Classics</a></li>
+                            <li><a href="../popular.html">IMDb Top 250</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Series <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../popular.html">Popular</a></li>
+                            <li><a href="../popular.html">New Releases</a></li>
+                            <li><a href="../popular.html">TV Shows</a></li>
+                            <li><a href="../popular.html">Mini Series</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">About <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../about/company.html">Company</a></li>
+                            <li><a href="../about/team.html">Team</a></li>
+                            <li><a href="../about/careers.html">Careers</a></li>
+                            <li><a href="../about/contact.html">Contact</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown auth-dropdown">
+                        <a href="#"><i class='bx bx-user'></i> <span class="auth-text">Sign in</span> <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu auth-menu">
+                            <li><a href="#" id="login-btn">Login</a></li>
+                            <li><a href="#" id="register-btn">Register</a></li>
+                            <li><a href="#" id="profile-btn" style="display:none;">Profile</a></li>
+                            <li><a href="#" id="logout-btn" style="display:none;">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="hamburger-menu" id="hamburger-menu">
+                    <div class="hamburger"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END NAV -->
+
+    <!-- MAIN CONTENT -->
+    <div class="section">
+        <div class="container">
+            <h1>Account</h1>
+            <p>
+                Manage your account settings, update your profile, and view your subscription details here.
+            </p>
+        </div>
+    </div>
+    <!-- END MAIN CONTENT -->
+
+    <!-- FOOTER SECTION -->
+    <footer class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-4 col-md-6 col-sm-12">
+                    <div class="content">
+                        <a href="../index.html" class="logo">
+                            <i class='bx bx-movie-play bx-tada main-color'></i>Fl<span class="main-color">i</span>x
+                        </a>
+                        <p>
+                            Experience an immersive journey into the world of cinema with our dynamic movie platform. Discover top-rated films, explore captivating stories, and dive into an extensive collection of genres. Enjoy seamless navigation, high-quality visuals, and an engaging user interface designed to enhance your viewing experience.
+                        </p>
+                        <div class="social-list">
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-facebook"></i>
+                            </a>
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-twitter"></i>
+                            </a>
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8 col-md-6 col-sm-12">
+                    <div class="row">
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Flix</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="../about/company.html">About Us</a></li>
+                                    <li><a href="../about/careers.html">Careers</a></li>
+                                    <li><a href="../press.html">Press</a></li>
+                                    <li><a href="../about/investors.html">Investors</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Browse</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="../browse/movies.html">Movies</a></li>
+                                    <li><a href="#">TV Shows</a></li>
+                                    <li><a href="#">Genres</a></li>
+                                    <li><a href="#">New Releases</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Help</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="../help/account.html">Account</a></li>
+                                    <li><a href="../help/plans.html">Plans</a></li>
+                                    <li><a href="../help/devices.html">Supported Devices</a></li>
+                                    <li><a href="../contact.html">Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Download app</b></p>
+                                <ul class="footer-menu">
+                                    <li>
+                                        <a href="#">
+                                            <img src="../images/google-play.png" alt="">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <img src="../images/app-store.png" alt="">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- END FOOTER SECTION -->
+
+    <!-- COPYRIGHT SECTION -->
+    <div class="copyright">
+        Copyright © 2025 <a href="#">Harshavardan</a>
+    </div>
+    <!-- END COPYRIGHT SECTION -->
+
+    <!-- SCRIPT -->
+    <!-- JQUERY -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+    <!-- OWL CAROUSEL -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" crossorigin="anonymous"></script>
+    <!-- APP SCRIPT -->
+    <script src="../js/app.js"></script>
+</body>
+
+</html>

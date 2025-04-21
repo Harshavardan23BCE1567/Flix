@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Press - Flix</title>
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet" />
+    <!-- BOX ICONS -->
+    <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
+    <!-- APP CSS -->
+    <link rel="stylesheet" href="./css/grid.css" />
+    <link rel="stylesheet" href="./css/app.css" />
+    <style>
+        /* Press page specific styles */
+        body {
+            background: linear-gradient(135deg, #221E1E 0%, #C1382B 100%);
+            color: #f0f0f0;
+            font-family: 'Cairo', sans-serif;
+        }
+        .press-section {
+            padding: 40px 0;
+        }
+
+        .press-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: rgba(34, 30, 30, 0.85);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(193, 56, 43, 0.6);
+        }
+
+        .press-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .press-header h1 {
+            font-weight: 700;
+            font-size: 2.5rem;
+            color: #f0f0f0;
+            text-shadow: 0 0 8px #C1382B;
+        }
+
+        .press-article {
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 20px;
+        }
+
+        .press-article h2 {
+            font-size: 1.5rem;
+            color: #FF6F61;
+            margin-bottom: 10px;
+            text-shadow: 0 0 6px #FF6F61;
+        }
+
+        .press-article p {
+            font-size: 1rem;
+            color: #ddd;
+            line-height: 1.6;
+        }
+
+        .press-article a {
+            color: #FF6F61;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .press-article a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAV -->
+    <div class="nav-wrapper">
+        <div class="container">
+            <div class="nav">
+                <a href="index.html" class="logo">
+                    <i class='bx bx-movie-play bx-tada main-color'></i>Fl<span class="main-color">i</span>x
+                </a>
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search movies, series..." id="search-input" />
+                        <button id="search-btn"><i class='bx bx-search'></i></button>
+                    </div>
+                    <div class="search-results" id="search-results"></div>
+                </div>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#">Genre <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="./genres/action.html">Action</a></li>
+                            <li><a href="./genres/action.html">Adventure</a></li>
+                            <li><a href="./genres/action.html">Animation</a></li>
+                            <li><a href="./genres/action.html">Comedy</a></li>
+                            <li><a href="./genres/action.html">Crime</a></li>
+                            <li><a href="./genres/action.html">Documentary</a></li>
+                            <li><a href="./genres/action.html">Drama</a></li>
+                            <li><a href="./genres/action.html">Fantasy</a></li>
+                            <li><a href="./genres/action.html">Horror</a></li>
+                            <li><a href="./genres/action.html">Sci-Fi</a></li>
+                            <li><a href="./genres/action.html">Thriller</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Movies <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="./popular.html">Popular</a></li>
+                            <li><a href="./popular.html">New Releases</a></li>
+                            <li><a href="./popular.html">Classics</a></li>
+                            <li><a href="./popular.html">IMDb Top 250</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Series <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="./popular.html">Popular</a></li>
+                            <li><a href="./popular.html">New Releases</a></li>
+                            <li><a href="./popular.html">TV Shows</a></li>
+                            <li><a href="./popular.html">Mini Series</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">About <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="./about/company.html">Company</a></li>
+                            <li><a href="./about/team.html">Team</a></li>
+                            <li><a href="./about/careers.html">Careers</a></li>
+                            <li><a href="./about/contact.html">Contact</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown auth-dropdown">
+                        <a href="#"><i class='bx bx-user'></i> <span class="auth-text">Sign in</span> <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu auth-menu">
+                            <li><a href="#" id="login-btn">Login</a></li>
+                            <li><a href="#" id="register-btn">Register</a></li>
+                            <li><a href="./profile.html" id="profile-btn" style="display:none;">Profile</a></li>
+                            <li><a href="#" id="logout-btn" style="display:none;">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- MOBILE MENU TOGGLE -->
+                <div class="hamburger-menu" id="hamburger-menu">
+                    <div class="hamburger"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END NAV -->
+
+    <!-- PRESS SECTION -->
+    <div class="press-section">
+        <div class="press-container">
+            <div class="press-header">
+                <h1>Press & Media</h1>
+                <p>Latest news and media coverage about Flix</p>
+            </div>
+            <div class="press-article">
+                <h2>Flix Launches New Streaming Platform</h2>
+                <p>Flix has officially launched its new streaming platform, offering a wide range of movies and series to viewers worldwide. The platform features an intuitive interface and personalized recommendations.</p>
+                <a href="https://example.com/flix-launch" target="_blank" rel="noopener noreferrer">Read more</a>
+            </div>
+            <div class="press-article">
+                <h2>Flix Partners with Major Studios</h2>
+                <p>Flix has partnered with several major studios to bring exclusive content to its subscribers. This partnership aims to enhance the content library and provide unique viewing experiences.</p>
+                <a href="https://example.com/flix-partners" target="_blank" rel="noopener noreferrer">Read more</a>
+            </div>
+            <div class="press-article">
+                <h2>Flix Wins Industry Award</h2>
+                <p>Flix was recently awarded the Best Streaming Service of the Year by the Entertainment Industry Association, recognizing its innovation and customer satisfaction.</p>
+                <a href="https://example.com/flix-award" target="_blank" rel="noopener noreferrer">Read more</a>
+            </div>
+        </div>
+    </div>
+    <!-- END PRESS SECTION -->
+
+    <!-- FOOTER SECTION -->
+    <footer class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-4 col-md-6 col-sm-12">
+                    <div class="content">
+                        <a href="index.html" class="logo">
+                            <i class='bx bx-movie-play bx-tada main-color'></i>Fl<span class="main-color">i</span>x
+                        </a>
+                        <p>
+                            Experience an immersive journey into the world of cinema with our dynamic movie platform. Discover top-rated films, explore captivating stories, and dive into an extensive collection of genres. Enjoy seamless navigation, high-quality visuals, and an engaging user interface designed to enhance your viewing experience.
+                        </p>
+                        <div class="social-list">
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-facebook"></i>
+                            </a>
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-twitter"></i>
+                            </a>
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8 col-md-6 col-sm-12">
+                    <div class="row">
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Flix</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="./about/company.html">About Us</a></li>
+                                    <li><a href="./about/careers.html">Careers</a></li>
+                                    <li><a href="./press.html">Press</a></li>
+                                    <li><a href="./about/investors.html">Investors</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Browse</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="./browse/movies.html">Movies</a></li>
+                                    <li><a href="./browse/movies.html">TV Shows</a></li>
+                                    <li><a href="./browse/movies.html">Genres</a></li>
+                                    <li><a href="./browse/movies.html">New Releases</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Help</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="./help/account.html">Account</a></li>
+                                    <li><a href="./help/plans.html">Plans</a></li>
+                                    <li><a href="./help/devices.html">Supported Devices</a></li>
+                                    <li><a href="./about/contact.html">Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Download app</b></p>
+                                <ul class="footer-menu">
+                                    <li>
+                                        <a href="#">
+                                            <img src="./images/google-play.png" alt="">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <img src="./images/app-store.png" alt="">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- END FOOTER SECTION -->
+
+    <!-- COPYRIGHT SECTION -->
+    <div class="copyright">
+        Copyright © 2025 <a href="https://harshavardan.com">Harshavardan</a>
+    </div>
+    <!-- END COPYRIGHT SECTION -->
+
+    <!-- SCRIPT -->
+    <!-- JQUERY -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+    <!-- OWL CAROUSEL -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" crossorigin="anonymous"></script>
+    <!-- APP SCRIPT -->
+    <script src="./js/app.js"></script>
+    <script>
+        // Update nav username display from localStorage
+        function updateNavUsername() {
+            const savedName = localStorage.getItem('profileName');
+            if (savedName) {
+                const authTextElements = document.querySelectorAll('.auth-text');
+                authTextElements.forEach(el => {
+                    el.textContent = savedName;
+                });
+            }
+        }
+        window.addEventListener('load', () => {
+            updateNavUsername();
+            // Also update after a short delay to override other scripts if needed
+            setTimeout(updateNavUsername, 500);
+        });
+    </script>
+</body>
+
+</html>

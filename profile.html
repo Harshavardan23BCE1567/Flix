@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile - Flix</title>
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet" />
+    <!-- BOX ICONS -->
+    <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
+    <!-- APP CSS -->
+    <link rel="stylesheet" href="./css/grid.css" />
+    <link rel="stylesheet" href="./css/app.css" />
+    <style>
+        /* Profile page specific styles */
+        body {
+            background: linear-gradient(135deg, #221E1E 0%, #C1382B 100%);
+            color: #f0f0f0;
+            font-family: 'Cairo', sans-serif;
+        }
+        .profile-section {
+            padding: 40px 0;
+        }
+
+        .profile-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: rgba(34, 30, 30, 0.85);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(193, 56, 43, 0.6);
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-header h1 {
+            font-weight: 700;
+            font-size: 2.5rem;
+            color: #f0f0f0;
+            text-shadow: 0 0 8px #C1382B;
+        }
+
+        .profile-picture {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            display: block;
+            border: 3px solid #FF6F61;
+            box-shadow: 0 0 10px #FF6F61;
+        }
+
+        .profile-form label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #f0f0f0;
+            text-shadow: 0 0 4px #C1382B;
+        }
+
+        .profile-form input[type="text"],
+        .profile-form input[type="email"],
+        .profile-form input[type="password"] {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 20px;
+            border: 1px solid #FF6F61;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: 'Cairo', sans-serif;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #f0f0f0;
+        }
+
+        .profile-form input[type="text"]::placeholder,
+        .profile-form input[type="email"]::placeholder,
+        .profile-form input[type="password"]::placeholder {
+            color: #f0f0f0;
+            opacity: 0.7;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 38px;
+            cursor: pointer;
+            color: #FF6F61;
+            text-shadow: 0 0 4px #FF6F61;
+        }
+
+        .password-toggle:hover {
+            color: #FF8A75;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .btn-save {
+            background-color: #FF6F61;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(255, 111, 97, 0.7);
+        }
+
+        .btn-save:hover {
+            background-color: #FF8A75;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(255, 111, 97, 0.9);
+        }
+
+        .success-message {
+            color: #90ee90;
+            font-weight: 600;
+            margin-top: 15px;
+            text-align: center;
+            text-shadow: 0 0 6px #90ee90;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAV -->
+    <div class="nav-wrapper">
+        <div class="container">
+            <div class="nav">
+                <a href="index.html" class="logo">
+                    <i class='bx bx-movie-play bx-tada main-color'></i>Fl<span class="main-color">i</span>x
+                </a>
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search movies, series..." id="search-input" />
+                        <button id="search-btn"><i class='bx bx-search'></i></button>
+                    </div>
+                    <div class="search-results" id="search-results"></div>
+                </div>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#">Genre <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="./genres/action.html">Action</a></li>
+                            <li><a href="./genres/action.html">Adventure</a></li>
+                            <li><a href="./genres/action.html">Animation</a></li>
+                            <li><a href="./genres/action.html">Comedy</a></li>
+                            <li><a href="./genres/action.html">Crime</a></li>
+                            <li><a href="./genres/action.html">Documentary</a></li>
+                            <li><a href="./genres/action.html">Drama</a></li>
+                            <li><a href="./genres/action.html">Fantasy</a></li>
+                            <li><a href="./genres/action.html">Horror</a></li>
+                            <li><a href="./genres/action.html">Sci-Fi</a></li>
+                            <li><a href="./genres/action.html">Thriller</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Movies <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="./popular.html">Popular</a></li>
+                            <li><a href="./popular.html">New Releases</a></li>
+                            <li><a href="./popular.html">Classics</a></li>
+                            <li><a href="./popular.html">IMDb Top 250</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Series <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="./popular.html">Popular</a></li>
+                            <li><a href="./popular.html">New Releases</a></li>
+                            <li><a href="./popular.html">TV Shows</a></li>
+                            <li><a href="./popular.html">Mini Series</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">About <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="./about/company.html">Company</a></li>
+                            <li><a href="./about/team.html">Team</a></li>
+                            <li><a href="./about/careers.html">Careers</a></li>
+                            <li><a href="./about/contact.html">Contact</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown auth-dropdown">
+                        <a href="#"><i class='bx bx-user'></i> <span class="auth-text">Profile</span> <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu auth-menu">
+                            <li><a href="profile.html" id="profile-btn">Profile</a></li>
+                            <li><a href="#" id="logout-btn">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- MOBILE MENU TOGGLE -->
+                <div class="hamburger-menu" id="hamburger-menu">
+                    <div class="hamburger"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END NAV -->
+
+    <!-- PROFILE SECTION -->
+    <div class="profile-section">
+        <div class="profile-container">
+            <div class="profile-header">
+                <h1>Your Profile</h1>
+            <div style="position: relative; display: inline-block; cursor: pointer; margin-bottom: 20px;">
+                <img src="./images/profile-placeholder.png" alt="Profile Picture" class="profile-picture" id="profile-image" />
+                <input type="file" id="image-upload" accept="image/*" style="display:none;" />
+                <div id="upload-icon" title="Upload Profile Picture" style="position: absolute; bottom: 5px; right: 5px; background-color: rgba(255, 111, 97, 0.85); border-radius: 50%; padding: 6px; box-shadow: 0 0 8px #FF6F61; color: white; font-size: 18px; display: flex; align-items: center; justify-content: center;">
+                    <i class='bx bx-camera'></i>
+                </div>
+            </div>
+        </div>
+        <form class="profile-form" id="profile-form">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required />
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Your email" required />
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="New password" />
+                <div class="password-toggle" id="toggle-password">
+                    <i class='bx bx-hide'></i>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-save">Save Changes</button>
+            <div class="success-message" id="success-message" style="display:none;">
+                Profile updated successfully!
+            </div>
+        </form>
+        </div>
+    </div>
+
+    <!-- FOOTER SECTION -->
+    <footer class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-4 col-md-6 col-sm-12">
+                    <div class="content">
+                        <a href="index.html" class="logo">
+                            <i class='bx bx-movie-play bx-tada main-color'></i>Fl<span class="main-color">i</span>x
+                        </a>
+                        <p>
+                            Experience an immersive journey into the world of cinema with our dynamic movie platform. Discover top-rated films, explore captivating stories, and dive into an extensive collection of genres. Enjoy seamless navigation, high-quality visuals, and an engaging user interface designed to enhance your viewing experience.
+                        </p>
+                        <div class="social-list">
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-facebook"></i>
+                            </a>
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-twitter"></i>
+                            </a>
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8 col-md-6 col-sm-12">
+                    <div class="row">
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Flix</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="./about/company.html">About Us</a></li>
+                                    <li><a href="./about/careers.html">Careers</a></li>
+                                    <li><a href="./press.html">Press</a></li>
+                                    <li><a href="./about/investors.html">Investors</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Browse</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="./browse/movies.html">Movies</a></li>
+                                    <li><a href="./browse/movies.html">TV Shows</a></li>
+                                    <li><a href="./browse/movies.html">Genres</a></li>
+                                    <li><a href="./browse/movies.html">New Releases</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Help</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="./help/account.html">Account</a></li>
+                                    <li><a href="./help/plans.html">Plans</a></li>
+                                    <li><a href="./help/devices.html">Supported Devices</a></li>
+                                    <li><a href="./about/contact.html">Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Download app</b></p>
+                                <ul class="footer-menu">
+                                    <li>
+                                        <a href="#">
+                                            <img src="./images/google-play.png" alt="">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <img src="./images/app-store.png" alt="">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- END FOOTER SECTION -->
+
+    <!-- COPYRIGHT SECTION -->
+    <div class="copyright">
+        Copyright © 2025 <a href="https://harshavardan.com">Harshavardan</a>
+    </div>
+    <!-- END COPYRIGHT SECTION -->
+
+    <!-- SCRIPT -->
+    <!-- JQUERY -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+    <!-- OWL CAROUSEL -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" crossorigin="anonymous"></script>
+    <!-- APP SCRIPT -->
+    <script src="./js/app.js"></script>
+        <script>
+            // Password toggle functionality
+            const togglePassword = document.getElementById('toggle-password');
+            const passwordInput = document.getElementById('password');
+            const profileImage = document.getElementById('profile-image');
+            const imageUpload = document.getElementById('image-upload');
+            const uploadIcon = document.getElementById('upload-icon');
+            const profileForm = document.getElementById('profile-form');
+            const successMessage = document.getElementById('success-message');
+            const nameInput = document.getElementById('name');
+
+            // Load saved profile data from localStorage
+            function loadProfile() {
+                const savedName = localStorage.getItem('profileName');
+                const savedEmail = localStorage.getItem('profileEmail');
+                const savedPassword = localStorage.getItem('profilePassword');
+                const savedImage = localStorage.getItem('profileImage');
+
+                if (savedName) {
+                    nameInput.value = savedName;
+                    updateNavUsername(savedName);
+                }
+                if (savedEmail) {
+                    document.getElementById('email').value = savedEmail;
+                }
+                if (savedPassword) {
+                    passwordInput.value = savedPassword;
+                }
+                if (savedImage) {
+                    profileImage.src = savedImage;
+                }
+            }
+
+            // Update nav username display
+            function updateNavUsername(name) {
+                const authTextElements = document.querySelectorAll('.auth-text');
+                authTextElements.forEach(el => {
+                    el.textContent = name;
+                });
+            }
+
+            // Password toggle
+            togglePassword.addEventListener('click', () => {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                togglePassword.innerHTML = '';
+                if (type === 'password') {
+                    togglePassword.innerHTML = "<i class='bx bx-hide'></i>";
+                } else {
+                    togglePassword.innerHTML = "<i class='bx bx-show'></i>";
+                }
+            });
+
+            // Profile image or icon click to open file dialog
+            profileImage.addEventListener('click', () => {
+                imageUpload.click();
+            });
+            uploadIcon.addEventListener('click', () => {
+                imageUpload.click();
+            });
+
+            // Handle image upload and preview
+            imageUpload.addEventListener('change', () => {
+                const file = imageUpload.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        profileImage.src = e.target.result;
+                        localStorage.setItem('profileImage', e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+        // Handle form submission
+        profileForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = nameInput.value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = passwordInput.value;
+
+            // Save to localStorage
+            localStorage.setItem('profileName', name);
+            localStorage.setItem('profileEmail', email);
+            if (password) {
+                localStorage.setItem('profilePassword', password);
+            }
+
+            updateNavUsername(name);
+
+            successMessage.style.display = 'block';
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 3000);
+        });
+
+        // Initialize profile on page load
+        window.addEventListener('DOMContentLoaded', loadProfile);
+    </script>
+</body>
+
+</html>

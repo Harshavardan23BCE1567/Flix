@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Action | Flix</title>
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+    <!-- BOX ICONS -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <!-- OWL CAROUSEL CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <!-- APP CSS -->
+    <link rel="stylesheet" href="../css/app.css">
+    <link rel="stylesheet" href="../css/grid.css">
+    <style>
+        .genre-header {
+            padding: 60px 0 30px;
+            background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.5)), url('../images/genres/action-bg.webp');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .genre-header h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        .genre-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            line-height: 1.6;
+        }
+        
+        .filter-section {
+            padding: 20px 0;
+            margin-bottom: 40px;
+            background-color: var(--box-bg);
+            border-radius: 8px;
+        }
+        
+        .filter-options {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 0 20px;
+        }
+        
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .filter-group label {
+            font-weight: 600;
+        }
+        
+        .filter-group select {
+            background-color: var(--body-bg);
+            color: var(--text-color);
+            border: 1px solid #444;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .content-section {
+            margin-bottom: 60px;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            padding-left: 15px;
+            border-left: 4px solid var(--main-color);
+        }
+        
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .movie-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+        
+        .movie-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .movie-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .movie-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .movie-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+        }
+        
+        .movie-info h3 {
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        
+        .movie-meta {
+            display: flex;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        @media (max-width: 768px) {
+            .genre-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .movies-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .filter-options {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .movies-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAV -->
+    <div class="nav-wrapper">
+        <div class="container">
+            <div class="nav">
+                <a href="../index.html" class="logo">
+                    <i class='bx bx-movie-play bx-tada main-color'></i>Fl<span class="main-color">i</span>x
+                </a>
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search movies, series..." id="search-input">
+                        <button id="search-btn"><i class='bx bx-search'></i></button>
+                    </div>
+                    <div class="search-results" id="search-results"></div>
+                </div>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#">Genre <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="action.html">Action</a></li>
+                            <li><a href="adventure.html">Adventure</a></li>
+                            <li><a href="animation.html">Animation</a></li>
+                            <li><a href="comedy.html">Comedy</a></li>
+                            <li><a href="sci-fi.html">Sci-Fi</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Movies <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../movies/popular.html">Popular</a></li>
+                            <li><a href="../movies/new-releases.html">New Releases</a></li>
+                            <li><a href="../movies/classics.html">Classics</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Series <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../series/popular.html">Popular</a></li>
+                            <li><a href="../series/new-releases.html">New Releases</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown auth-dropdown">
+                        <a href="#"><i class='bx bx-user'></i> <span class="auth-text">Sign in</span> <i class='bx bx-chevron-down'></i></a>
+                        <ul class="dropdown-menu auth-menu">
+                            <li><a href="#" id="login-btn">Login</a></li>
+                            <li><a href="#" id="register-btn">Register</a></li>
+                            <li><a href="../profile.html" id="profile-btn" style="display:none;">Profile</a></li>
+                            <li><a href="#" id="logout-btn" style="display:none;">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="hamburger-menu" id="hamburger-menu">
+                    <div class="hamburger"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END NAV -->
+
+    <!-- Genre Header -->
+    <div class="genre-header">
+        <div class="container">
+            <h1>Action</h1>
+            <p>Experience heart-pounding excitement with our collection of action-packed movies and series. From explosive blockbusters to intense fight sequences, these titles will keep you on the edge of your seat.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <div class="filter-options">
+                <div class="filter-group">
+                    <label for="sort-by">Sort by:</label>
+                    <select id="sort-by">
+                        <option value="popular">Most Popular</option>
+                        <option value="newest">Newest</option>
+                        <option value="rating">Highest Rated</option>
+                        <option value="year">Release Year</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="content-type">Content Type:</label>
+                    <select id="content-type">
+                        <option value="all">All</option>
+                        <option value="movies">Movies</option>
+                        <option value="series">TV Series</option>
+                        <option value="cartoons">Cartoons</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="year-range">Year:</label>
+                    <select id="year-range">
+                        <option value="all">All Years</option>
+                        <option value="2020s">2020s</option>
+                        <option value="2010s">2010s</option>
+                        <option value="2000s">2000s</option>
+                        <option value="1990s">1990s</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Movies -->
+        <div class="content-section">
+            <h2 class="section-title">Action Movies</h2>
+            <div class="movies-grid">
+                <a href="../movies/action/black-panther.html" class="movie-card">
+                    <img src="../images/black-banner.png" alt="Black Panther">
+                    <div class="movie-info">
+                        <h3>Black Panther</h3>
+                        <div class="movie-meta">
+                            <span>2018</span>
+                            <span><i class='bx bxs-star'></i> 7.3</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="movie-card">
+                    <img src="../images/movies/endgame.webp" alt="Avengers: Endgame">
+                    <div class="movie-info">
+                        <h3>Avengers: Endgame</h3>
+                        <div class="movie-meta">
+                            <span>2019</span>
+                            <span><i class='bx bxs-star'></i> 8.4</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="movie-card">
+                    <img src="../images/movies/john-wick.webp" alt="John Wick">
+                    <div class="movie-info">
+                        <h3>John Wick</h3>
+                        <div class="movie-meta">
+                            <span>2014</span>
+                            <span><i class='bx bxs-star'></i> 7.4</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="movie-card">
+                    <img src="../images/movies/mad-max.webp" alt="Mad Max: Fury Road">
+                    <div class="movie-info">
+                        <h3>Mad Max: Fury Road</h3>
+                        <div class="movie-meta">
+                            <span>2015</span>
+                            <span><i class='bx bxs-star'></i> 8.1</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="movie-card">
+                    <img src="../images/movies/dark-knight.webp" alt="The Dark Knight">
+                    <div class="movie-info">
+                        <h3>The Dark Knight</h3>
+                        <div class="movie-meta">
+                            <span>2008</span>
+                            <span><i class='bx bxs-star'></i> 9.0</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="movie-card">
+                    <img src="../images/movies/mission.webp" alt="Mission: Impossible - Fallout">
+                    <div class="movie-info">
+                        <h3>Mission: Impossible - Fallout</h3>
+                        <div class="movie-meta">
+                            <span>2018</span>
+                            <span><i class='bx bxs-star'></i> 7.7</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="movie-card">
+                    <img src="../images/movies/transformer.jpg" alt="Transformers">
+                    <div class="movie-info">
+                        <h3>Transformers</h3>
+                        <div class="movie-meta">
+                            <span>2007</span>
+                            <span><i class='bx bxs-star'></i> 7.0</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="movie-card">
+                    <img src="../images/movies/deadpool.webp" alt="Deadpool">
+                    <div class="movie-info">
+                        <h3>Deadpool</h3>
+                        <div class="movie-meta">
+                            <span>2016</span>
+                            <span><i class='bx bxs-star'></i> 8.0</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Action Series -->
+        <div class="content-section">
+            <h2 class="section-title">Action Series</h2>
+            <div class="movies-grid">
+                <a href="#" class="movie-card">
+                    <img src="../images/series/mandalorian.webp" alt="The Mandalorian">
+                    <div class="movie-info">
+                        <h3>The Mandalorian</h3>
+                        <div class="movie-meta">
+                            <span>2019-</span>
+                            <span><i class='bx bxs-star'></i> 8.7</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="movie-card">
+                    <img src="../images/series/witcher.webp" alt="The Witcher">
+                    <div class="movie-info">
+                        <h3>The Witcher</h3>
+                        <div class="movie-meta">
+                            <span>2019-</span>
+                            <span><i class='bx bxs-star'></i> 8.2</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="movie-card">
+                    <img src="../images/series/got.webp" alt="Game of Thrones">
+                    <div class="movie-info">
+                        <h3>Game of Thrones</h3>
+                        <div class="movie-meta">
+                            <span>2011-2019</span>
+                            <span><i class='bx bxs-star'></i> 9.2</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="movie-card">
+                    <img src="../images/series/stranger-thing.jpg" alt="Stranger Things">
+                    <div class="movie-info">
+                        <h3>Stranger Things</h3>
+                        <div class="movie-meta">
+                            <span>2016-</span>
+                            <span><i class='bx bxs-star'></i> 8.7</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="movie-card">
+                    <img src="../images/series/the-boys.webp" alt="The Boys">
+                    <div class="movie-info">
+                        <h3>The Boys</h3>
+                        <div class="movie-meta">
+                            <span>2019-</span>
+                            <span><i class='bx bxs-star'></i> 8.7</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="movie-card">
+                    <img src="../images/series/loki.webp" alt="Loki">
+                    <div class="movie-info">
+                        <h3>Loki</h3>
+                        <div class="movie-meta">
+                            <span>2021-</span>
+                            <span><i class='bx bxs-star'></i> 8.2</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="movie-card">
+                    <img src="../images/series/daredevil.webp" alt="Daredevil">
+                    <div class="movie-info">
+                        <h3>Daredevil</h3>
+                        <div class="movie-meta">
+                            <span>2015-2018</span>
+                            <span><i class='bx bxs-star'></i> 8.6</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="movie-card">
+                    <img src="../images/series/jack-ryan.webp" alt="Jack Ryan">
+                    <div class="movie-info">
+                        <h3>Jack Ryan</h3>
+                        <div class="movie-meta">
+                            <span>2018-</span>
+                            <span><i class='bx bxs-star'></i> 8.1</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Action Cartoons/Anime -->
+        <div class="content-section">
+            <h2 class="section-title">Action Cartoons & Anime</h2>
+            <div class="movies-grid">
+                <a href="#" class="movie-card">
+                    <img src="../images/cartoons/demon-slayer.jpg" alt="Demon Slayer">
+                    <div class="movie-info">
+                        <h3>Demon Slayer</h3>
+                        <div class="movie-meta">
+                            <span>2019-</span>
+                            <span><i class='bx bxs-star'></i> 8.7</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="movie-card">
+                    <img src="../images/cartoons/aot.webp" alt="Attack on Titan">
+                    <div class="movie-info">
+                        <h3>Attack on Titan</h3>
+                        <div class="movie-meta">
+                            <span>2013-2021</span>
+                            <span><i class='bx bxs-star'></i> 9.0</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="movie-card">
+                    <img src="../images/cartoons/jujutsu.webp" alt="Jujutsu Kaisen">
+                    <div class="movie-info">
+                        <h3>Jujutsu Kaisen</h3>
+                        <div class="movie-meta">
+                            <span>2020-</span>
+                            <span><i class='bx bxs-star'></i> 8.6</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="movie-card">
+                    <img src="../images/cartoons/avatar.webp" alt="Avatar: The Last Airbender">
+                    <div class="movie-info">
+                        <h3>Avatar: The Last Airbender</h3>
+                        <div class="movie-meta">
+                            <span>2005-2008</span>
+                            <span><i class='bx bxs-star'></i> 9.3</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="movie-card">
+                    <img src="../images/cartoons/naruto.webp" alt="Naruto Shippuden">
+                    <div class="movie-info">
+                        <h3>Naruto Shippuden</h3>
+                        <div class="movie-meta">
+                            <span>2007-2017</span>
+                            <span><i class='bx bxs-star'></i> 8.6</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="movie-card">
+                    <img src="../images/cartoons/one-punch.webp" alt="One Punch Man">
+                    <div class="movie-info">
+                        <h3>One Punch Man</h3>
+                        <div class="movie-meta">
+                            <span>2015-</span>
+                            <span><i class='bx bxs-star'></i> 8.7</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="movie-card">
+                    <img src="../images/cartoons/my-hero.webp" alt="My Hero Academia">
+                    <div class="movie-info">
+                        <h3>My Hero Academia</h3>
+                        <div class="movie-meta">
+                            <span>2016-</span>
+                            <span><i class='bx bxs-star'></i> 8.4</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="movie-card">
+                    <img src="../images/cartoons/castlevania.webp" alt="Castlevania">
+                    <div class="movie-info">
+                        <h3>Castlevania</h3>
+                        <div class="movie-meta">
+                            <span>2017-2021</span>
+                            <span><i class='bx bxs-star'></i> 8.3</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER SECTION -->
+    <footer class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-4 col-md-6 col-sm-12">
+                    <div class="content">
+                        <a href="../index.html" class="logo">
+                            <i class='bx bx-movie-play bx-tada main-color'></i>Fl<span class="main-color">i</span>x
+                        </a>
+                        <p>
+                            Your premier destination for streaming the latest movies, TV shows, and exclusive content. Enjoy unlimited entertainment anywhere, anytime.
+                        </p>
+                        <div class="social-list">
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-facebook"></i>
+                            </a>
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-twitter"></i>
+                            </a>
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8 col-md-6 col-sm-12">
+                    <div class="row">
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Flix</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="../about.html">About Us</a></li>
+                                    <li><a href="../careers.html">Careers</a></li>
+                                    <li><a href="../press.html">Press</a></li>
+                                    <li><a href="../contact.html">Contact</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Browse</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="../browse/movies.html">Movies</a></li>
+                                    <li><a href="../browse/movies.html">TV Shows</a></li>
+                                    <li><a href="action.html">Genres</a></li>
+                                    <li><a href="../browse/movies.html">New Releases</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Help</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="../help/account.html">Account</a></li>
+                                    <li><a href="../help/plans.html">Plans</a></li>
+                                    <li><a href="../help/devices.html">Devices</a></li>
+                                    <li><a href="../help/contact.html">Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Download</b></p>
+                                <ul class="footer-menu">
+                                    <li>
+                                        <a href="#">
+                                            <img src="../images/google-play.png" alt="Get on Google Play" style="width:120px;">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <img src="../images/app-store.png" alt="Download on App Store" style="width:120px;">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- COPYRIGHT SECTION -->
+    <div class="copyright">
+        Copyright © 2025 <a href="https://www.youtube.com/channel/UCnNgtK4tGlWcceXVzoyTg8Q" target="_blank">Flix</a>. All Rights Reserved.
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script src="../js/app.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Store all content items with their metadata
+            const allContent = [
+                // Movies
+                {
+                    title: "Black Panther",
+                    year: 2018,
+                    rating: 7.3,
+                    type: "movies",
+                    decade: "2010s",
+                    element: $('.movies-grid a:contains("Black Panther")').parent()
+                },
+                {
+                    title: "Avengers: Endgame",
+                    year: 2019,
+                    rating: 8.4,
+                    type: "movies",
+                    decade: "2010s",
+                    element: $('.movies-grid a:contains("Avengers: Endgame")').parent()
+                },
+                {
+                    title: "John Wick",
+                    year: 2014,
+                    rating: 7.4,
+                    type: "movies",
+                    decade: "2010s",
+                    element: $('.movies-grid a:contains("John Wick")').parent()
+                },
+                {
+                    title: "Mad Max: Fury Road",
+                    year: 2015,
+                    rating: 8.1,
+                    type: "movies",
+                    decade: "2010s",
+                    element: $('.movies-grid a:contains("Mad Max: Fury Road")').parent()
+                },
+                {
+                    title: "The Dark Knight",
+                    year: 2008,
+                    rating: 9.0,
+                    type: "movies",
+                    decade: "2000s",
+                    element: $('.movies-grid a:contains("The Dark Knight")').parent()
+                },
+                {
+                    title: "Mission: Impossible - Fallout",
+                    year: 2018,
+                    rating: 7.7,
+                    type: "movies",
+                    decade: "2010s",
+                    element: $('.movies-grid a:contains("Mission: Impossible - Fallout")').parent()
+                },
+                {
+                    title: "Transformers",
+                    year: 2007,
+                    rating: 7.0,
+                    type: "movies",
+                    decade: "2000s",
+                    element: $('.movies-grid a:contains("Transformers")').parent()
+                },
+                {
+                    title: "Deadpool",
+                    year: 2016,
+                    rating: 8.0,
+                    type: "movies",
+                    decade: "2010s",
+                    element: $('.movies-grid a:contains("Deadpool")').parent()
+                },
+                
+                // Series
+                {
+                    title: "The Mandalorian",
+                    year: 2019,
+                    rating: 8.7,
+                    type: "series",
+                    decade: "2010s",
+                    element: $('.movies-grid a:contains("The Mandalorian")').parent()
+                },
+                {
+                    title: "The Witcher",
+                    year: 2019,
+                    rating: 8.2,
+                    type: "series",
+                    decade: "2010s",
+                    element: $('.movies-grid a:contains("The Witcher")').parent()
+                },
+                {
+                    title: "Game of Thrones",
+                    year: 2011,
+                    rating: 9.2,
+                    type: "series",
+                    decade: "2010s",
+                    element: $('.movies-grid a:contains("Game of Thrones")').parent()
+                },
+                {
+                    title: "Stranger Things",
+                    year: 2016,
+                    rating: 8.7,
+                    type: "series",
+                    decade: "2010s",
+                    element: $('.movies-grid a:contains("Stranger Things")').parent()
+                },
+                {
+                    title: "The Boys",
+                    year: 2019,
+                    rating: 8.7,
+                    type: "series",
+                    decade: "2010s",
+                    element: $('.movies-grid a:contains("The Boys")').parent()
+                },
+                {
+                    title: "Loki",
+                    year: 2021,
+                    rating: 8.2,
+                    type: "series",
+                    decade: "2020s",
+                    element: $('.movies-grid a:contains("Loki")').parent()
+                },
+                {
+                    title: "Daredevil",
+                    year: 2015,
+                    rating: 8.6,
+                    type: "series",
+                    decade: "2010s",
+                    element: $('.movies-grid a:contains("Daredevil")').parent()
+                },
+                {
+                    title: "Jack Ryan",
+                    year: 2018,
+                    rating: 8.1,
+                    type: "series",
+                    decade: "2010s",
+                    element: $('.movies-grid a:contains("Jack Ryan")').parent()
+                },
+                
+                // Cartoons/Anime
+                {
+                    title: "Demon Slayer",
+                    year: 2019,
+                    rating: 8.7,
+                    type: "cartoons",
+                    decade: "2010s",
+                    element: $('.movies-grid a:contains("Demon Slayer")').parent()
+                },
+                {
+                    title: "Attack on Titan",
+                    year: 2013,
+                    rating: 9.0,
+                    type: "cartoons",
+                    decade: "2010s",
+                    element: $('.movies-grid a:contains("Attack on Titan")').parent()
+                },
+                {
+                    title: "Jujutsu Kaisen",
+                    year: 2020,
+                    rating: 8.6,
+                    type: "cartoons",
+                    decade: "2020s",
+                    element: $('.movies-grid a:contains("Jujutsu Kaisen")').parent()
+                },
+                {
+                    title: "Avatar: The Last Airbender",
+                    year: 2005,
+                    rating: 9.3,
+                    type: "cartoons",
+                    decade: "2000s",
+                    element: $('.movies-grid a:contains("Avatar: The Last Airbender")').parent()
+                },
+                {
+                    title: "Naruto Shippuden",
+                    year: 2007,
+                    rating: 8.6,
+                    type: "cartoons",
+                    decade: "2000s",
+                    element: $('.movies-grid a:contains("Naruto Shippuden")').parent()
+                },
+                {
+                    title: "One Punch Man",
+                    year: 2015,
+                    rating: 8.7,
+                    type: "cartoons",
+                    decade: "2010s",
+                    element: $('.movies-grid a:contains("One Punch Man")').parent()
+                },
+                {
+                    title: "My Hero Academia",
+                    year: 2016,
+                    rating: 8.4,
+                    type: "cartoons",
+                    decade: "2010s",
+                    element: $('.movies-grid a:contains("My Hero Academia")').parent()
+                },
+                {
+                    title: "Castlevania",
+                    year: 2017,
+                    rating: 8.3,
+                    type: "cartoons",
+                    decade: "2010s",
+                    element: $('.movies-grid a:contains("Castlevania")').parent()
+                }
+            ];
+    
+            // Function to filter content
+            function filterContent() {
+                const sortBy = $('#sort-by').val();
+                const contentType = $('#content-type').val();
+                const yearRange = $('#year-range').val();
+                
+                // Filter by content type
+                let filteredContent = allContent;
+                if (contentType !== 'all') {
+                    filteredContent = filteredContent.filter(item => item.type === contentType);
+                }
+                
+                // Filter by decade
+                if (yearRange !== 'all') {
+                    filteredContent = filteredContent.filter(item => item.decade === yearRange);
+                }
+                
+                // Sort the results
+                switch(sortBy) {
+                    case 'newest':
+                        filteredContent.sort((a, b) => b.year - a.year);
+                        break;
+                    case 'rating':
+                        filteredContent.sort((a, b) => b.rating - a.rating);
+                        break;
+                    case 'year':
+                        filteredContent.sort((a, b) => a.year - b.year);
+                        break;
+                    case 'popular':
+                    default:
+                        // Default sort (by title)
+                        filteredContent.sort((a, b) => a.title.localeCompare(b.title));
+                        break;
+                }
+                
+                // Hide all items first
+                $('.movies-grid > div').hide();
+                
+                // Show only filtered items
+                filteredContent.forEach(item => {
+                    item.element.show();
+                });
+                
+                // Update section visibility based on filters
+                updateSectionVisibility();
+            }
+            
+            // Function to update section headers based on filters
+            function updateSectionVisibility() {
+                const contentType = $('#content-type').val();
+                
+                // Hide all sections first
+                $('.content-section').hide();
+                
+                // Show sections based on content type filter
+                if (contentType === 'all' || contentType === 'movies') {
+                    $('.content-section:contains("Action Movies")').show();
+                }
+                if (contentType === 'all' || contentType === 'series') {
+                    $('.content-section:contains("Action Series")').show();
+                }
+                if (contentType === 'all' || contentType === 'cartoons') {
+                    $('.content-section:contains("Action Cartoons")').show();
+                }
+            }
+            
+            // Initialize - show all content
+            filterContent();
+            
+            // Set up event listeners
+            $('#sort-by, #content-type, #year-range').change(filterContent);
+        });
+    </script>
+</body>
+</html>
