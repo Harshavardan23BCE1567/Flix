@@ -62,4 +62,3 @@ Additional Note on grid.css:
 - This grid system is used to create flexible, consistent, and responsive layouts throughout the website.
 - It helps in structuring the page content in rows and columns, adapting to different screen sizes for better user experience.
 
-You can present this summary to your teacher to explain the scope, design choices, technologies, and features of your website project.
