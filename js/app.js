@@ -251,6 +251,11 @@ $(document).ready(() => {
         e.preventDefault();
         currentUser = null;
         localStorage.removeItem('currentUser');
+        // Clear profile related localStorage keys
+        localStorage.removeItem('profileName');
+        localStorage.removeItem('profileEmail');
+        localStorage.removeItem('profilePassword');
+        localStorage.removeItem('profileImage');
         updateAuthUI();
     });
 

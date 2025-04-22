@@ -354,10 +354,17 @@
 
             // Load saved profile data from localStorage
             function loadProfile() {
-                const savedName = localStorage.getItem('profileName');
-                const savedEmail = localStorage.getItem('profileEmail');
-                const savedPassword = localStorage.getItem('profilePassword');
-                const savedImage = localStorage.getItem('profileImage');
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                if (!currentUser) {
+                    // Redirect to login page if not logged in
+                    window.location.href = 'index.html'; // or login page if exists
+                    return;
+                }
+
+                const savedName = currentUser.username || '';
+                const savedEmail = currentUser.email || '';
+                const savedPassword = currentUser.password || '';
+                const savedImage = localStorage.getItem('profileImage') || './images/profile-placeholder.png';
 
                 if (savedName) {
                     nameInput.value = savedName;
@@ -422,12 +429,17 @@
             const email = document.getElementById('email').value.trim();
             const password = passwordInput.value;
 
-            // Save to localStorage
-            localStorage.setItem('profileName', name);
-            localStorage.setItem('profileEmail', email);
+            // Update currentUser in localStorage
+            let currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+            currentUser.username = name;
+            currentUser.email = email;
             if (password) {
-                localStorage.setItem('profilePassword', password);
+                currentUser.password = password;
             }
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+            // Save profile image separately
+            // profileImage.src is updated on image upload event
 
             updateNavUsername(name);
 
